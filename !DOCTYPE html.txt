@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" id="htmlTag">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Pool - Career Platform</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75'>🏊</text></svg>">
+    
+    <!-- GOOGLE ADSENSE VERIFICATION CODE -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1107796056474518" crossorigin="anonymous"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #0066cc;
+            --accent: #00bcd4;
+            --accent-light: #4dd0e1;
+            --success: #26c6da;
+            --bg-light: #f0f8ff;
+            --text-dark: #004d66;
+            --text-light: #00838f;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        [dir="rtl"] { text-align: right; direction: rtl; }
+        [dir="rtl"] .logo { flex-direction: row-reverse; }
+        [dir="rtl"] .header-content { flex-direction: row-reverse; }
+
+        .header {
+            background: linear-gradient(135deg, #ffffff 0%, #e0f7fa 100%);
+            border-bottom: 2px solid var(--accent);
+            padding: 1.2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #0066cc 0%, #00bcd4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #0080ff 0%, #00bcd4 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+        }
+
+        .lang-dropdown { position: relative; }
+
+        .lang-btn {
+            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+            border: 2px solid var(--accent);
+            color: var(--text-dark);
+            padding: 0.65rem 1.2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .lang-btn:hover { 
+            background: var(--accent);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .lang-dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background: white;
+            min-width: 200px;
+            box-shadow: 0 8px 24px rgba(0, 150, 167, 0.15);
+            z-index: 1000;
+            border-radius: 12px;
+            border: 2px solid var(--accent);
+            overflow: hidden;
+            top: 100%;
+            margin-top: 0.5rem;
+        }
+
+        .lang-dropdown-content.show { display: block; }
+
+        .lang-option {
+            color: var(--text-dark);
+            padding: 0.85rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            width: 100%;
+            text-align: left;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .lang-option:hover { 
+            background: var(--bg-light);
+            color: var(--accent);
+        }
+
+        .lang-option.active { 
+            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .btn {
+            padding: 0.85rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0080ff 0%, #00bcd4 100%);
+            color: white;
+        }
+
+        .btn-primary:hover { transform: translateY(-3px); }
+
+        .btn-success {
+            background: linear-gradient(135deg, #00bcd4 0%, #4dd0e1 100%);
+            color: white;
+        }
+
+        .wrapper { max-width: 1400px; margin: 0 auto; padding: 3rem 2rem; }
+
+        .hero {
+            text-align: center;
+            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+            border-radius: 20px;
+            padding: 4rem 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #0066cc 0%, #00bcd4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .stat-card {
+            background: white;
+            border: 2px solid var(--accent);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .stat-number { font-size: 2.5rem; font-weight: 900; color: var(--primary); }
+        .stat-label { color: var(--text-light); margin-top: 0.5rem; font-weight: 600; }
+
+        .ad-space {
+            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+            border: 2px dashed var(--accent);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 3rem 0;
+            text-align: center;
+            color: var(--text-light);
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            background: white;
+            border: 2px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 0.85rem 1.5rem;
+            border: none;
+            background: transparent;
+            color: var(--text-light);
+            font-weight: 700;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab-btn:hover { background: var(--bg-light); }
+        .tab-btn.active {
+            background: linear-gradient(135deg, #0080ff 0%, #00bcd4 100%);
+            color: white;
+        }
+
+        .tab-content { display: none; animation: fadeIn 0.4s; }
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .card {
+            background: white;
+            border: 2px solid #80deea;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .card h3 { font-size: 1.4rem; margin-bottom: 1.5rem; color: var(--primary); }
+
+        .form-group { margin-bottom: 1.5rem; }
+        label { display: block; margin-bottom: 0.75rem; font-weight: 700; color: var(--text-dark); }
+        input, select, textarea {
+            width: 100%;
+            padding: 0.95rem 1.2rem;
+            border: 2px solid #80deea;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 1rem;
+            color: var(--text-dark);
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.1);
+        }
+
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .template-card {
+            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+            border: 2px solid var(--accent);
+            border-radius: 15px;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .template-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+        }
+
+        .template-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+        .template-name { font-weight: 700; color: var(--primary); }
+        .template-desc { font-size: 0.85rem; color: var(--text-light); }
+
+        .alert {
+            padding: 1.25rem;
+            border-radius: 12px;
+            margin-top: 1.5rem;
+            display: none;
+            border-left: 4px solid;
+        }
+
+        .alert.show { display: block; }
+
+        .alert-success {
+            background: linear-gradient(135deg, rgba(0, 188, 212, 0.1) 0%, rgba(77, 208, 225, 0.1) 100%);
+            border-left-color: var(--success);
+            color: var(--text-dark);
+        }
+
+        .footer {
+            background: linear-gradient(135deg, #ffffff 0%, #e0f7fa 100%);
+            border-top: 2px solid var(--accent);
+            color: var(--text-light);
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+            text-align: center;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+            border: 2px solid var(--accent);
+            border-radius: 15px;
+            padding: 1.5rem;
+        }
+
+        .copy-btn {
+            padding: 0.85rem 1.5rem;
+            background: linear-gradient(135deg, #0080ff 0%, #00bcd4 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 700;
+        }
+
+        .converter-zone {
+            border: 3px dashed var(--accent);
+            border-radius: 15px;
+            padding: 3rem;
+            text-align: center;
+            background: linear-gradient(135deg, #e0f7fa 0%, #f0f8ff 100%);
+            cursor: pointer;
+            margin-bottom: 2rem;
+        }
+
+        .contact-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .templates-grid { grid-template-columns: repeat(2, 1fr); }
+            .contact-form-grid { grid-template-columns: 1fr; }
+            .tabs { flex-direction: column; }
+            .tab-btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="header-content">
+            <a href="#" class="logo">
+                <div class="logo-icon">🏊</div>
+                <span id="logoText">Your Pool</span>
+            </a>
+            <div class="lang-dropdown">
+                <button class="lang-btn" onclick="toggleLangDropdown()">
+                    <span id="langFlag">🇬🇧</span>
+                    <span id="langName">English</span>
+                </button>
+                <div class="lang-dropdown-content" id="langDropdown">
+                    <button class="lang-option active" onclick="changeLang('en', '🇬🇧', 'English')"><span>🇬🇧</span> English</button>
+                    <button class="lang-option" onclick="changeLang('de', '🇩🇪', 'Deutsch')"><span>🇩🇪</span> Deutsch</button>
+                    <button class="lang-option" onclick="changeLang('ar', '🇸🇦', 'العربية')"><span>🇸🇦</span> العربية</button>
+                    <button class="lang-option" onclick="changeLang('fr', '🇫🇷', 'Français')"><span>🇫🇷</span> Français</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="wrapper">
+        <div class="hero">
+            <h1 id="heroTitle">Your Pool - Career Platform</h1>
+            <p id="heroDesc">Free AI-powered tools for CVs, translations, file conversion, and more.</p>
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number">50K+</div>
+                    <div class="stat-label" id="stat1">Users</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100K+</div>
+                    <div class="stat-label" id="stat2">Files Converted</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label" id="stat3">Satisfaction</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label" id="stat4">Free Forever</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ad-space">
+            <!-- GOOGLE AD SPACE 1 -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1107796056474518"
+                 data-ad-slot="1111111111"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab(event, 'cv')">🎓 <span id="tabCV">CV Templates</span></button>
+            <button class="tab-btn" onclick="switchTab(event, 'converter')">📄 <span id="tabConverter">File Converter</span></button>
+            <button class="tab-btn" onclick="switchTab(event, 'translate')">🌐 <span id="tabTranslate">Translator</span></button>
+            <button class="tab-btn" onclick="switchTab(event, 'rewriter')">✏️ <span id="tabRewriter">Rewriter</span></button>
+            <button class="tab-btn" onclick="switchTab(event, 'newsletter')">📬 <span id="tabNewsletter">Newsletter</span></button>
+            <button class="tab-btn" onclick="switchTab(event, 'contact')">📧 <span id="tabContact">Contact</span></button>
+        </div>
+
+        <!-- CV TEMPLATES -->
+        <div id="cv" class="tab-content active">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <h2 style="font-size: 2.2rem; color: var(--primary); margin-bottom: 1rem;" id="cvTitle">Professional CV Templates</h2>
+                <p style="color: var(--text-light);" id="cvDesc">8 templates ready to download</p>
+            </div>
+            <div class="templates-grid">
+                <div class="template-card"><div class="template-icon">🎓</div><div class="template-name">Student CV</div><div class="template-desc" id="template1Desc">For students</div></div>
+                <div class="template-card"><div class="template-icon">🛠️</div><div class="template-name">Apprentice</div><div class="template-desc" id="template2Desc">For trainees</div></div>
+                <div class="template-card"><div class="template-icon">💼</div><div class="template-name">Professional</div><div class="template-desc" id="template3Desc">For professionals</div></div>
+                <div class="template-card"><div class="template-icon">👔</div><div class="template-name">Executive</div><div class="template-desc" id="template4Desc">For executives</div></div>
+                <div class="template-card"><div class="template-icon">🎨</div><div class="template-name">Creative</div><div class="template-desc" id="template5Desc">For creatives</div></div>
+                <div class="template-card"><div class="template-icon">💻</div><div class="template-name">Tech</div><div class="template-desc" id="template6Desc">For developers</div></div>
+                <div class="template-card"><div class="template-icon">📊</div><div class="template-name">Manager</div><div class="template-desc" id="template7Desc">For managers</div></div>
+                <div class="template-card"><div class="template-icon">🌍</div><div class="template-name">International</div><div class="template-desc" id="template8Desc">For global roles</div></div>
+            </div>
+
+            <div class="ad-space">
+                <!-- GOOGLE AD SPACE 2 -->
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-1107796056474518"
+                     data-ad-slot="2222222222"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+
+        <!-- FILE CONVERTER -->
+        <div id="converter" class="tab-content">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <h2 style="font-size: 2.2rem; color: var(--primary);" id="converterTitle">File Converter</h2>
+                <p style="color: var(--text-light);" id="converterDesc">PDF, Word, JPG conversion</p>
+            </div>
+            <div class="card">
+                <h3 id="uploadTitle">📁 Upload File</h3>
+                <div class="converter-zone">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">📤</div>
+                    <div style="font-weight: 700; color: var(--text-dark);" id="dragText">Drag & drop or click</div>
+                    <div style="color: var(--text-light);" id="fileFormats">JPG, PNG, DOCX, PDF</div>
+                </div>
+                <button class="btn btn-success" style="width: 100%;"><span id="convertBtn">⚡ Convert Now</span></button>
+            </div>
+        </div>
+
+        <!-- TRANSLATOR -->
+        <div id="translate" class="tab-content">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <h2 style="font-size: 2.2rem; color: var(--primary);" id="transTitle">Instant Translator</h2>
+                <p style="color: var(--text-light);" id="transDesc">Translate to 8 languages</p>
+            </div>
+            <div class="card">
+                <div class="form-group">
+                    <label id="langLabel">Translate To:</label>
+                    <select><option>🇩🇪 Deutsch</option><option>🇬🇧 English</option><option>🇸🇦 العربية</option></select>
+                </div>
+                <div class="form-group">
+                    <label id="textLabel">Original Text</label>
+                    <textarea placeholder="Enter text..."></textarea>
+                </div>
+                <button class="btn btn-primary" style="width: 100%;"><span id="transBtn">🌐 Translate</span></button>
+            </div>
+        </div>
+
+        <!-- TEXT REWRITER -->
+        <div id="rewriter" class="tab-content">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <h2 style="font-size: 2.2rem; color: var(--primary);" id="rewriteTitle">AI Text Rewriter</h2>
+                <p style="color: var(--text-light);" id="rewriteDesc">6 professional styles</p>
+            </div>
+            <div class="card">
+                <textarea placeholder="Your text..." style="width: 100%; min-height: 120px; margin-bottom: 1.5rem;"></textarea>
+                <button class="btn btn-success" style="width: 100%;"><span id="rewriteBtn">✨ Generate</span></button>
+            </div>
+        </div>
+
+        <!-- NEWSLETTER -->
+        <div id="newsletter" class="tab-content">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <h2 style="font-size: 2.2rem; color: var(--primary);" id="newsTitle">Join Our Community</h2>
+                <p style="color: var(--text-light);" id="newsDesc">Weekly tips & job opportunities</p>
+            </div>
+            <div class="card" style="background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); border: 2px solid var(--accent);">
+                <h3 id="newsLetterHeading">📧 Newsletter</h3>
+                <div class="contact-form-grid">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label style="color: var(--text-dark);" id="emailLabel">Email</label>
+                        <input type="email" placeholder="your@email.com">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label style="color: var(--text-dark);" id="nameLabel">Name</label>
+                        <input type="text" placeholder="Your Name">
+                    </div>
+                </div>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 1.5rem;" id="subBtn">🚀 Subscribe</button>
+            </div>
+
+            <div class="ad-space">
+                <!-- GOOGLE AD SPACE 3 -->
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-1107796056474518"
+                     data-ad-slot="3333333333"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+
+        <!-- CONTACT FORM -->
+        <div id="contact" class="tab-content">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <h2 style="font-size: 2.2rem; color: var(--primary);" id="contactTitle">Contact Us</h2>
+                <p style="color: var(--text-light);" id="contactDesc">We'd love to hear from you!</p>
+            </div>
+            <div class="card">
+                <h3 id="contactFormHeading">📧 Get In Touch</h3>
+                <form id="contactForm" onsubmit="submitContact(event)">
+                    <div class="contact-form-grid">
+                        <div class="form-group">
+                            <label id="contactNameLabel">Your Name *</label>
+                            <input type="text" required placeholder="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label id="contactEmailLabel">Email *</label>
+                            <input type="email" required placeholder="john@example.com">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label id="contactSubjectLabel">Subject *</label>
+                        <input type="text" required placeholder="How can we help?">
+                    </div>
+                    <div class="form-group">
+                        <label id="contactMsgLabel">Message *</label>
+                        <textarea required placeholder="Tell us more..." style="min-height: 150px;"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;" id="sendBtn">📨 Send Message</button>
+                </form>
+                <div class="alert alert-success" id="contactSuccess" style="display: none;">
+                    <strong id="successMsg">✓ Success!</strong>
+                    <p style="margin-top: 0.5rem;" id="successDesc">Thank you! We'll get back to you soon.</p>
+                </div>
+            </div>
+
+            <div class="ad-space">
+                <!-- GOOGLE AD SPACE 4 -->
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-1107796056474518"
+                     data-ad-slot="4444444444"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p id="footerText">© 2026 Your Pool - Career Platform | Made with 💙 for Global Professionals</p>
+    </div>
+
+    <script>
+        const translations = {
+            en: {
+                logoText: "Your Pool",
+                heroTitle: "Your Pool - Career Platform",
+                heroDesc: "Free AI-powered tools for CVs, translations, file conversion, and more.",
+                stat1: "Users",
+                stat2: "Files Converted",
+                stat3: "Satisfaction",
+                stat4: "Free Forever",
+                tabCV: "CV Templates",
+                tabConverter: "File Converter",
+                tabTranslate: "Translator",
+                tabRewriter: "Rewriter",
+                tabNewsletter: "Newsletter",
+                tabContact: "Contact",
+                cvTitle: "Professional CV Templates",
+                cvDesc: "8 templates ready to download",
+                converterTitle: "File Converter",
+                converterDesc: "PDF, Word, JPG conversion",
+                uploadTitle: "📁 Upload File",
+                dragText: "Drag & drop or click",
+                fileFormats: "JPG, PNG, DOCX, PDF",
+                convertBtn: "⚡ Convert Now",
+                transTitle: "Instant Translator",
+                transDesc: "Translate to 8 languages",
+                langLabel: "Translate To:",
+                textLabel: "Original Text",
+                transBtn: "🌐 Translate",
+                rewriteTitle: "AI Text Rewriter",
+                rewriteDesc: "6 professional styles",
+                rewriteBtn: "✨ Generate",
+                newsTitle: "Join Our Community",
+                newsDesc: "Weekly tips & job opportunities",
+                newsLetterHeading: "📧 Newsletter",
+                emailLabel: "Email",
+                nameLabel: "Name",
+                subBtn: "🚀 Subscribe",
+                contactTitle: "Contact Us",
+                contactDesc: "We'd love to hear from you!",
+                contactFormHeading: "📧 Get In Touch",
+                contactNameLabel: "Your Name *",
+                contactEmailLabel: "Email *",
+                contactSubjectLabel: "Subject *",
+                contactMsgLabel: "Message *",
+                sendBtn: "📨 Send Message",
+                successMsg: "✓ Success!",
+                successDesc: "Thank you! We'll get back to you soon.",
+                footerText: "© 2026 Your Pool - Career Platform | Made with 💙 for Global Professionals"
+            },
+            de: {
+                logoText: "Your Pool",
+                heroTitle: "Your Pool - Karriereplattform",
+                heroDesc: "Kostenlose KI-Tools für Lebensläufe, Übersetzungen, Dateikonvertierung und mehr.",
+                stat1: "Nutzer",
+                stat2: "Dateien konvertiert",
+                stat3: "Zufriedenheit",
+                stat4: "Für immer kostenlos",
+                tabCV: "Lebenslauf-Vorlagen",
+                tabConverter: "Dateikonverter",
+                tabTranslate: "Übersetzer",
+                tabRewriter: "Umformulierer",
+                tabNewsletter: "Newsletter",
+                tabContact: "Kontakt",
+                cvTitle: "Professionelle Lebenslauf-Vorlagen",
+                cvDesc: "8 Vorlagen zum Herunterladen",
+                converterTitle: "Dateikonverter",
+                converterDesc: "PDF-, Word-, JPG-Konvertierung",
+                uploadTitle: "📁 Datei hochladen",
+                dragText: "Datei ziehen oder klicken",
+                fileFormats: "JPG, PNG, DOCX, PDF",
+                convertBtn: "⚡ Jetzt konvertieren",
+                transTitle: "Instant-Übersetzer",
+                transDesc: "In 8 Sprachen übersetzen",
+                langLabel: "Übersetzen zu:",
+                textLabel: "Original-Text",
+                transBtn: "🌐 Übersetzen",
+                rewriteTitle: "KI-Textumformulierer",
+                rewriteDesc: "6 professionelle Stile",
+                rewriteBtn: "✨ Generieren",
+                newsTitle: "Treten Sie unserer Gemeinschaft bei",
+                newsDesc: "Wöchentliche Tipps und Jobchancen",
+                newsLetterHeading: "📧 Newsletter",
+                emailLabel: "E-Mail",
+                nameLabel: "Name",
+                subBtn: "🚀 Abonnieren",
+                contactTitle: "Kontaktieren Sie uns",
+                contactDesc: "Wir freuen uns, von Ihnen zu hören!",
+                contactFormHeading: "📧 Kontakt aufnehmen",
+                contactNameLabel: "Ihr Name *",
+                contactEmailLabel: "E-Mail *",
+                contactSubjectLabel: "Betreff *",
+                contactMsgLabel: "Nachricht *",
+                sendBtn: "📨 Nachricht senden",
+                successMsg: "✓ Erfolg!",
+                successDesc: "Danke! Wir melden uns bald bei Ihnen.",
+                footerText: "© 2026 Your Pool - Karriereplattform | Mit 💙 für globale Fachkräfte gemacht"
+            },
+            ar: {
+                logoText: "Your Pool",
+                heroTitle: "Your Pool - منصة الوظائف",
+                heroDesc: "أدوات ذكية مجانية للسير الذاتية والترجمة وتحويل الملفات والمزيد.",
+                stat1: "مستخدم",
+                stat2: "ملفات محولة",
+                stat3: "الرضا",
+                stat4: "مجاني للأبد",
+                tabCV: "نماذج السيرة الذاتية",
+                tabConverter: "محول الملفات",
+                tabTranslate: "المترجم",
+                tabRewriter: "إعادة الصياغة",
+                tabNewsletter: "النشرة الإخبارية",
+                tabContact: "اتصل بنا",
+                cvTitle: "نماذج السيرة الذاتية الاحترافية",
+                cvDesc: "8 نماذج جاهزة للتحميل",
+                converterTitle: "محول الملفات",
+                converterDesc: "تحويل PDF و Word و JPG",
+                uploadTitle: "📁 رفع الملف",
+                dragText: "اسحب الملف أو انقر",
+                fileFormats: "JPG, PNG, DOCX, PDF",
+                convertBtn: "⚡ تحويل الآن",
+                transTitle: "مترجم فوري",
+                transDesc: "ترجمة إلى 8 لغات",
+                langLabel: "الترجمة إلى:",
+                textLabel: "النص الأصلي",
+                transBtn: "🌐 ترجمة",
+                rewriteTitle: "أداة إعادة صياغة النصوص",
+                rewriteDesc: "6 أساليب احترافية",
+                rewriteBtn: "✨ إنشاء",
+                newsTitle: "انضم إلى مجتمعنا",
+                newsDesc: "نصائح أسبوعية وفرص عمل",
+                newsLetterHeading: "📧 النشرة الإخبارية",
+                emailLabel: "البريد الإلكتروني",
+                nameLabel: "الاسم",
+                subBtn: "🚀 اشترك",
+                contactTitle: "اتصل بنا",
+                contactDesc: "نود أن نسمع منك!",
+                contactFormHeading: "📧 اتصل بنا",
+                contactNameLabel: "اسمك *",
+                contactEmailLabel: "البريد الإلكتروني *",
+                contactSubjectLabel: "الموضوع *",
+                contactMsgLabel: "الرسالة *",
+                sendBtn: "📨 إرسال الرسالة",
+                successMsg: "✓ نجح!",
+                successDesc: "شكراً! سنتواصل معك قريباً.",
+                footerText: "© 2026 Your Pool - منصة الوظائف | مصنوع بـ 💙 للمحترفين حول العالم"
+            },
+            fr: {
+                logoText: "Your Pool",
+                heroTitle: "Your Pool - Plateforme Carrière",
+                heroDesc: "Outils gratuits alimentés par l'IA pour CV, traductions, conversion de fichiers et bien plus.",
+                stat1: "Utilisateurs",
+                stat2: "Fichiers convertis",
+                stat3: "Satisfaction",
+                stat4: "Gratuit pour toujours",
+                tabCV: "Modèles de CV",
+                tabConverter: "Convertisseur de fichiers",
+                tabTranslate: "Traducteur",
+                tabRewriter: "Réécriture",
+                tabNewsletter: "Infolettre",
+                tabContact: "Contact",
+                cvTitle: "Modèles de CV professionnels",
+                cvDesc: "8 modèles prêts à télécharger",
+                converterTitle: "Convertisseur de fichiers",
+                converterDesc: "Conversion PDF, Word, JPG",
+                uploadTitle: "📁 Télécharger le fichier",
+                dragText: "Glissez-déposez ou cliquez",
+                fileFormats: "JPG, PNG, DOCX, PDF",
+                convertBtn: "⚡ Convertir maintenant",
+                transTitle: "Traducteur instantané",
+                transDesc: "Traduire dans 8 langues",
+                langLabel: "Traduire en:",
+                textLabel: "Texte original",
+                transBtn: "🌐 Traduire",
+                rewriteTitle: "Réécriture de texte IA",
+                rewriteDesc: "6 styles professionnels",
+                rewriteBtn: "✨ Générer",
+                newsTitle: "Rejoignez notre communauté",
+                newsDesc: "Conseils hebdomadaires et opportunités d'emploi",
+                newsLetterHeading: "📧 Infolettre",
+                emailLabel: "Email",
+                nameLabel: "Nom",
+                subBtn: "🚀 S'abonner",
+                contactTitle: "Nous contacter",
+                contactDesc: "Nous aimerions avoir de vos nouvelles!",
+                contactFormHeading: "📧 Entrez en contact",
+                contactNameLabel: "Votre nom *",
+                contactEmailLabel: "Email *",
+                contactSubjectLabel: "Sujet *",
+                contactMsgLabel: "Message *",
+                sendBtn: "📨 Envoyer un message",
+                successMsg: "✓ Succès!",
+                successDesc: "Merci! Nous vous recontacterons bientôt.",
+                footerText: "© 2026 Your Pool - Plateforme Carrière | Fait avec 💙 pour les professionnels du monde"
+            }
+        };
+
+        let currentLang = 'en';
+
+        function toggleLangDropdown() {
+            document.getElementById('langDropdown').classList.toggle('show');
+        }
+
+        function changeLang(lang, flag, name) {
+            currentLang = lang;
+            document.getElementById('htmlTag').lang = lang;
+            document.getElementById('htmlTag').dir = (lang === 'ar') ? 'rtl' : 'ltr';
+            document.getElementById('langFlag').textContent = flag;
+            document.getElementById('langName').textContent = name;
+            document.getElementById('langDropdown').classList.remove('show');
+            
+            // Update all text
+            const trans = translations[lang] || translations.en;
+            Object.keys(trans).forEach(key => {
+                const el = document.getElementById(key);
+                if (el) el.textContent = trans[key];
+            });
+
+            // Update active language option
+            document.querySelectorAll('.lang-option').forEach(opt => opt.classList.remove('active'));
+            event.target.closest('.lang-option').classList.add('active');
+        }
+
+        function switchTab(event, tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.target.closest('.tab-btn').classList.add('active');
+        }
+
+        function submitContact(e) {
+            e.preventDefault();
+            document.getElementById('contactSuccess').style.display = 'block';
+            document.getElementById('contactForm').reset();
+            setTimeout(() => {
+                document.getElementById('contactSuccess').style.display = 'none';
+            }, 5000);
+        }
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.lang-dropdown')) {
+                document.getElementById('langDropdown').classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>
